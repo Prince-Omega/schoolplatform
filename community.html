@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community-Edozone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="eduzone-logo.png" alt="EduZone Logo" class="logo">
+        <h1>Community</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="courses.html">Courses</a>
+            <a href="profile.html">Profile</a>
+            <a href="discussion.html">Discussion</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Community Discussions</h2>
+            <p>Join our community discussions to ask questions, share knowledge, and connect with other learners.</p>
+            <ol id="discussionList">
+                <h1>Leaderboard</h1>
+    <ol>
+        <li>Rhtruyap Gefta N.</li>
+         <li>Shiminyi Rodanel</li>
+         <li>Fru Blaise</li>
+         <li>Samjela Gideon</li>
+         <li>Akum Betrand</li>
+         <li>Ayuk Doroti</li>
+         <li>Shey Gildas</li>
+    </ol>
+    <h1>Recent Discussions</h1>
+            </ol>
+                <li>John Doe: How do I start with JavaScript?</li>
+                <li>Jane Smith: Best practices for CSS styling?</li>
+                <li>Mike Johnson: Can anyone recommend good Python resources?</li>
+                <li>Emily Davis: What are the latest trends in web development?</li>
+                <li>Sarah Brown: How to optimize website performance?</li>
+                <li>David Wilson: Tips for learning React.js?</li>
+                <li>Laura Garcia: Understanding Firebase Firestore?</li>
+                <li>Chris Martinez: How to deploy a web application?</li>
+                <li>Anna Lee: What are the best tools for UI/UX design?</li>
+                <li>Tom Clark: How to handle API requests in JavaScript?</li>
+                <li>Lisa Walker: What are the differences between SQL and NoSQL databases?</li>
+                <li>James Hall: How to secure a web application?</li>
+                <li>Patricia Allen: Best practices for responsive design?</li>
+                <li>Robert Young: How to use Git for version control?</li>
+                <li>Linda King: What are the benefits of using TypeScript?</li>
+                <li>Michael Wright: How to integrate third-party APIs?</li>
+                <li>Elizabeth Scott: Tips for debugging JavaScript code?</li>
+                <li>William Green: How to create a RESTful API?</li>
+                <li>Jessica Adams: What are the advantages of using CSS preprocessors?</li>
+                <li>Charles Baker: How to manage state in React applications?</li>
+                <li>Mary Gonzalez: What are the best practices for web accessibility?</li>
+                <li>Daniel Nelson: How to implement authentication in web apps?</li>
+                <li>Jennifer Carter: Tips for effective code reviews?</li>
+            </ol>
+        </section>
+        <section>
+            <h2>Post a New Discussion</h2>
+            <form id="discussionForm" onsubmit="postDiscussion(event)">
+                <input type="text" id="discussionTitle" placeholder="Discussion Title" required />
+                <textarea id="discussionContent" placeholder="Write your discussion here..." required></textarea>
+                <button type="submit">Post Discussion</button>
+ </form>
+        </section>
+    </main>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyApFmAAh7nCmXHKncB2bYnMspLGBoF_Ovo",
+            authDomain: "eduzone-4e0ce.firebaseapp.com",
+            projectId: "eduzone-4e0ce",
+            storageBucket: "eduzone-4e0ce.appspot.com",
+            messagingSenderId: "527569861172",
+            appId: "1:527569861172:web:26c08bb32d613dc7606861",
+            measurementId: "G-NVK7Y3LX7C"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        // Function to post a new discussion
+        async function postDiscussion(event) {
+            event.preventDefault();
+            const title = document.getElementById('discussionTitle').value;
+            const content = document.getElementById('discussionContent').value;
+            await db.collection('discussions').add({
+                title: title,
+                content: content,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            document.getElementById('discussionForm').reset();
+            loadDiscussions();
+        }
+        // Function to load discussions from Firestore
+        async function loadDiscussions() {
+            const discussionList = document.getElementById('discussionList');
+            discussionList.innerHTML = '';
+            const snapshot = await db.collection('discussions').orderBy('timestamp', 'desc').get();
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<strong>${data.title}</strong><p>${data.content}</p>`;
+                discussionList.appendChild(listItem);
+            });
+        }
+        // Load discussions on page load
+        window.onload = loadDiscussions;
+
+    </script>
+    <footer>
+        <p>&copy; 2025 EduZone. All rights reserved.</p>
+    </footer>
+    
+</body>
+</html>

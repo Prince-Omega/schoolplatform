@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings-Edozone</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>Settings</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="profile.html">Profile</a>
+            <a href="logout.html">Logout</a>
+        </nav>
+    </header>
+        <div class="settings-container">
+            <h2>Account Settings</h2>
+            <form id="settings-form">
+                <div class="setting-group">
+                    <label>Notifications:</label>
+                    <input type="checkbox" id="notifications-enabled" name="notifications">
+                    <label for="notifications-enabled">Enable Notifications</label>
+                </div>
+
+                <div class="setting-group">
+                    <label>Font Size:</label>
+                    <select id="font-size" name="font-size">
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                </div>
+
+                <div class="setting-group">
+                    <label>Theme:</label>
+                    <select id="theme" name="theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="save-changes">Save Changes</button>
+            </form>
+        </div>
+               <script>
+                const firebaseConfig = {
+  apiKey: "AIzaSyApFmAAh7nCmXHKncB2bYnMspLGBoF_Ovo",
+  authDomain: "eduzone-4e0ce.firebaseapp.com",
+  projectId: "eduzone-4e0ce",
+  storageBucket: "eduzone-4e0ce.firebasestorage.app",
+  messagingSenderId: "527569861172",
+  appId: "1:527569861172:web:26c08bb32d613dc7606861",
+  measurementId: "G-NVK7Y3LX7C"
+};
+ firebase.initializeApp(firebaseConfig);
+ const auth = firebase.auth();
+                const settingsForm = document.getElementById('settings-form');
+                const notificationsEnabled = document.getElementById('notification-enabled');
+                const fontSizeSelect = document.getElementById('font-size');
+                const themeSelect = document.getElementById('theme');
+
+                settingsForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const settings = {
+                        notifications: notificationsEnabled.checked,
+                        fontSize: fontSizeSelect.value,
+                        theme: themeSelect.value,
+                    };
+                    db.collection('settings').doc('usersettings').set(settings)
+                    .then(() => {
+                    console.log('Settings saved!');
+                    applySettings(settings);
+                })
+                .catch((error) => {
+                    console.error('Error saving settings:', error);
+                });
+            });
+
+                function applySettings(settings) {
+                    document.body.style.fontSize = settings.fontSize ==='small' ? '12px' : settings.fontSize ==='medium' ? '16px' : '20px';
+                    document.body.classList.toggle('dark-theme', settings.theme === 'dark');
+                    if (settings.notifications) {
+                        //Enable notification
+                    } else {
+                        //Disable notification
+                    }
+                }
+                db.collection('settings').doc('userSettings').get()
+                .then((doc) => {
+                    if (doc.exists) {
+                const savedSettings = doc.data();
+                    notificationsEnabled.checked = savedSettings.notifications;
+                    fontSizeSelect.value = savedSettings.fontSize;
+                    themeSelect.value =savedSettings.theme;
+                    applySettings(savedSettings);
+                } else {
+                    console.log('No settings found!');
+                }
+                })
+                .catch((error) => {
+                    console.log('Error loading settings:', error);
+                });
+               </script>
+                
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EduZone</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet"> <!-- Added Google Fonts -->
+      <!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Login to EduZone</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="register.html">Register</a>
+                </nav>
+    </header>
+    <main>
+        <section>
+            <div class="login-container">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <label for="username">Email:</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <div class="show-password">
+                        <input type="checkbox" id="showPass">
+                        <label for="showPass" style="margin:0;">Show Password</label>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+                <a class="register-link" href="register.html">Don't have an account? Register</a>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 EduZone. All rights reserved.</p>
+    </footer>
+    <script>
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyApFmAAh7nCmXHKncB2bYnMspLGBoF_Ovo",
+  authDomain: "eduzone-4e0ce.firebaseapp.com",
+  projectId: "eduzone-4e0ce",
+  storageBucket: "eduzone-4e0ce.firebasestorage.app",
+  messagingSenderId: "527569861172",
+  appId: "1:527569861172:web:26c08bb32d613dc7606861",
+  measurementId: "G-NVK7Y3LX7C"
+};
+  // Initialize Firebase with your project's configuration
+      firebase.initializeApp(firebaseConfig);
+
+      // Get the Firebase Authentication service instance
+      const auth = firebase.auth();
+
+      // === STEP 2: SHOW/HIDE PASSWORD FUNCTIONALITY ===
+      document.getElementById('showPass').addEventListener('change', function() {
+        const pwd = document.getElementById('password');
+        pwd.type = this.checked ? 'text' : 'password';
+      });
+
+      // === STEP 3: HANDLE LOGIN FORM SUBMISSION ===
+      document.getElementById('loginForm').addEventListener('submit', function(e) {
+        // Prevent the default form submission behavior (stops page reload)
+        e.preventDefault();
+
+        // Get the email and password from the form inputs
+        const email = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Use Firebase Authentication to sign in the user
+        auth.signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            // Sign-in successful!
+            const user = userCredential.user;
+            console.log("User successfully signed in:", user.email);
+
+            // Redirect to the dashboard page
+            window.location.href = "dashboard.html";
+          })
+          .catch((error) => {
+            // Handle any errors during sign-in
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            console.error("Login Error:", errorCode, errorMessage);
+            // Display an alert with the error message to the user
+            alert("Login failed: " + errorMessage);
+
+            // For a better user experience, consider displaying error messages
+            // directly on the page instead of an alert, e.g., in a div below the form.
+          });
+      });
+
+      // Optional: Listen for authentication state changes (useful for dynamic UI)
+      auth.onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          console.log("Authentication state changed: User is logged in as", user.email);
+          // You could update UI elements here if needed, like showing a "Logout" button.
+        } else {
+          // No user is signed in.
+          console.log("Authentication state changed: No user is logged in.");
+        }
+        });
+</script>
+</body>
+</html>

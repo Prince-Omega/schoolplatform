@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses - EduZone</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <header>
+        <img src="eduzone-logo.png" alt="EduZone Logo" class="logo">
+        <h1>Courses</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="courses.html">Courses</a>
+            <a href="profile.html">Profile</a>
+            <a href="discussion.html">Discussion</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Available Courses</h2>
+            <ul id="coursesList"></ul>
+            <li>Full Frontend Developement </li>
+        <li>php</li>
+        <li>Javascript</li>
+        <li>Html</li>
+        <li>CSS</li>
+        <li>Database</li>
+        <li>Full Stack Developement</li>
+        <li>Full Android Developement</li>
+        <li>Full IOS Developement</li>
+        <li>Full Game Developement</li>
+        <li>Full Web Developement</li>
+        <li>Full Software Developement</li>
+        <li>Full Data Science</li>
+        <li>Full Machine Learning</li>
+        <li>Full Artificial Intelligence</li>
+        <li>Full Backend Delopement</li>
+        <li>C-Programming</li>
+        <li>Pascal-Programming</li>
+        <li>Python</li>
+        <li>Security</li>
+        <li>Graphic Designing</li>
+        <li>Video Animation</li>
+        <li>Ethical Hacking</li>
+        </section>
+        <section>
+            <h2>Your Course Progress</h2>
+            <ul id="progressList"></ul>
+        </section>
+    </main>
+    <script>
+        // Your Firebase config (use your actual config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyApFmAAh7nCmXHKncB2bYnMspLGBoF_Ovo",
+            authDomain: "eduzone-4e0ce.firebaseapp.com",
+            projectId: "eduzone-4e0ce",
+            storageBucket: "eduzone-4e0ce.firebasestorage.app",
+            messagingSenderId: "527569861172",
+            appId: "1:527569861172:web:26c08bb32d613dc7606861",
+            measurementId: "G-NVK7Y3LX7C"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+         // Wait for Firebase Auth to be ready
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            const userId = user.uid;
+
+        // Fetch and display courses
+        db.collection('courses').get().then(snapshot => {
+            const list = document.getElementById('coursesList');
+            snapshot.forEach(doc => {
+                const course = doc.data();
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${course.title}</strong>: ${course.description} 
+                    <button onclick="enrollCourse('${doc.id}', '${course.title}')">Enroll</button>`;
+                list.appendChild(li);
+            });
+        });
+
+        // Enroll function (creates/updates progress)
+        function enrollCourse(courseId, courseTitle) {
+            // For demo, use a fake userId. Replace with real user ID if using Auth!
+            const userId = "demoUser";
+            db.collection('progress').doc(`${userId}_${courseId}`).set({
+                userId,
+                courseId,
+                courseTitle,
+                percentComplete: 0
+            }).then(() => {
+                alert(`Enrolled in ${courseTitle}!`);
+                loadProgress();
+            });
+        }
+        // Display progress for the user
+        function loadProgress() {
+            const list = document.getElementById('progressList');
+            list.innerHTML = '';
+            db.collection('progress').where('userId', '==', userId).get().then(snapshot => {
+                snapshot.forEach(doc => {
+                    const progress = doc.data();
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${progress.courseTitle}</strong>: ${progress.percentComplete}% complete
+                        <button onclick="updateProgress('${doc.id}', ${progress.percentComplete})">Mark Progress</button>`;
+                    list.appendChild(li);
+                });
+            });
+        }
+
+        // Update progress function
+        function updateProgress(progressId, current) {
+            const newProgress = Math.min(current + 10, 100);
+            db.collection('progress').doc(progressId).update({
+                percentComplete: newProgress
+            }).then(() => {
+                alert('Progress updated!');
+                loadProgress();
+            });
+             }
+
+        // Load progress on page load
+        loadProgress();
+    } else {
+            alert("Please log in to view and track your courses.");
+            window.location.href = "login.html";
+        }
+    });
+    </script>
+</body>
+</html>

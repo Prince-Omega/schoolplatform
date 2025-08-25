@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduZone</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js">
+        const db = firebase.firestore();
+    </script>
+    <style>
+        </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to EduZone</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="profile.html">Profile</a>
+            <a href="discussion.html">Discussion</a>
+            <!-- Search bar in navigation -->
+            <form id="search-form">
+                <input type="text" id="search-input" placeholder="Search...">
+                <button type="submit">
+                    <span class="search-icon">&#128269;</span>Search
+                </button>
+            </form>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h2>About EduZone</h2>
+            <p id="typewriter" style="min-height:40px;"></p>
+            <div class="hero-buttons">
+                <button title="Login to your account" onclick="window.location.href='login.html'">
+                    <span class="hero-btn-icon">🚀</span> Get Started
+                </button>
+                <button title="Create a new account" onclick="window.location.href='register.html'">
+                    <span class="hero-btn-icon">📝</span> Join Now
+                </button>
+                <button title="Ask a question in the community" onclick="window.location.href='discussion.html'">
+                    <span class="hero-btn-icon">❓</span> Ask a Question
+                </button>
+            </div>
+        </section>
+        <section class="features">
+            <div class="feature-card">
+                <h3>Interactive Courses</h3>
+                <p>Engage with hands-on lessons and quizzes to boost your learning experience.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Progress Tracking</h3>
+                <p>Monitor your achievements and set goals to stay motivated on your journey.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Community Support</h3>
+                <p>Join discussions, ask questions, and collaborate with fellow learners.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Resource Library</h3>
+                <p>Access a wide range of materials, including articles, videos, and e-books.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Mobile Friendly</h3>
+                <p>Learn on the go with our responsive design, optimized for all devices.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Secure & Private</h3>
+                <p>Your data is safe with us. We prioritize your privacy and security.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Regular Updates</h3>
+                <p>Stay up-to-date with the latest trends and technologies in the education sector.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Expert Instructors</h3>
+                <p>Learn from industry professionals and experienced educators.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Flexible Learning</h3>
+                <p>Study at your own pace with our self-paced courses and resources.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Certification</h3>
+                <p>Earn certificates upon course completion to showcase your skills.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Body fitness</h3>
+                <p>We also provide balance meal in case you are in need<a href="desert/inde.html"> Click here</a> to place order</p>
+            </div>
+            <div class="feature-card">
+                <h3>Discussion Board</h3>
+                <p>Engage with the community, ask questions, and share knowledge.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Dark Mode</h3>
+                <p>Switch to dark mode for a comfortable reading experience at night.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Scroll-to-top Button</h3>
+                <p>Easily navigate back to the top of the page with our scroll-to-top button.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Typewriter Effect</h3>
+                <p>Enjoy a dynamic typewriter effect for engaging text animations.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Search Functionality</h3>
+                <p>Quickly find courses and resources with our search feature.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Responsive Design</h3>
+                <p>Experience a seamless layout across all devices, from desktops to smartphones.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Accessibility Features</h3>
+                <p>Designed to be accessible for all users, including those with disabilities.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Regular Backups</h3>
+                <p>We ensure your data is safe with regular backups and security measures.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Feedback System</h3>
+                <p>Share your thoughts and help us improve with our feedback system.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Multi-language Support</h3>
+                <p>Learn in your preferred language with our multi-language support.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Gamification</h3>
+                <p>Earn points and badges as you complete courses and engage with the community.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Live Sessions</h3>
+                <p>Join live Q&A sessions with instructors and industry experts.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Personalized Learning Paths</h3>
+                <p>Get tailored course recommendations based on your interests and goals.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Offline Access</h3>
+                <p>Download courses and resources to learn without an internet connection.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Integration with Tools</h3>
+                <p>Connect with popular tools and platforms for a seamless learning experience.</p>
+            </div>
+            
+            </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 EduZone. All rights reserved.</p>
+    </footer>
+    <!-- Scroll-to-top button -->
+    <button id="scrollTopBtn" title="Go to top">↑</button>
+    <script>
+        // Search functionality
+        document.getElementById('search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = document.getElementById('search-input').value.trim();
+            if (query) {
+                window.location.href=`https://www.google.com/search?q=${query}`;
+            }
+        });
+        // Typewriter effect
+        const messages = [
+            "Access resources, track your progress, and connect with a vibrant learning community.",
+            "Learn at your own pace, anytime, anywhere.",
+            "Join EduZone and start your journey today!"
+        ];
+        let msgIndex = 0, charIndex = 0;
+        function typeWriter() {
+            const el = document.getElementById('typewriter');
+            if (!el) return;
+            if (charIndex < messages[msgIndex].length) {
+                el.textContent += messages[msgIndex].charAt(charIndex++);
+                setTimeout(typeWriter, 40);
+            } else {
+                setTimeout(() => {
+                    el.textContent = '';
+                    charIndex = 0;
+                    msgIndex = (msgIndex + 1) % messages.length;
+                    typeWriter();
+                }, 1800);
+                 }
+        }
+        typeWriter();
+
+         // Scroll-to-top button with fade
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        window.onscroll = function() {
+            if (window.scrollY > 200) {
+                scrollBtn.classList.add('show');
+            } else {
+                scrollBtn.classList.remove('show');
+            }
+        };
+        scrollBtn.onclick = function() {
+            window.scrollTo({top:0, behavior:'smooth'});
+        };
+
+        // Dark mode toggle
+        document.getElementById('darkModeToggle').onclick = function() {
+            document.body.classList.toggle('dark-mode');
+        };
+    </script>
+</body>
+</html>
